@@ -10,7 +10,7 @@ class user(models.Model):
     username = models.CharField(max_length=40)
     email = models.CharField(max_length=40)
     password = models.CharField(max_length=40)
-    image = models.CharField(max_length=40)
+    image = models.ImageField(upload_to='avatares', null=True, blank=True)
     status =  models.IntegerField()
     created_time  = models.DateField()
 
@@ -27,6 +27,6 @@ class post(models.Model):
     titulo = models
     breve = models.CharField(max_length=40)
     contenido = models.TextField()
-    image= models.CharField(max_length=40)
+    image= models.ImageField(upload_to='avatares', null=True, blank=True)
     created_at= models.DateField()
     
