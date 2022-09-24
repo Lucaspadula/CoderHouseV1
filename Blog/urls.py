@@ -9,6 +9,6 @@ urlpatterns = [
     path('',lambda req: redirect('AppBlogInicio')),
     path('admin/', admin.site.urls),
     path('AppBlog/',include('AppBlog.urls')),
-    path('UserBlog/', include('UserBlog.urls'))
+    path('UserBlog/', include('UserBlog.urls')),
 
 ]

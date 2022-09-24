@@ -1,12 +1,16 @@
+from multiprocessing import context
 from urllib import request
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
+from UserBlog.forms import UserRegisterForm
 
 
-def login_request(request):
+
+def login_request(request):   
+
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
         
@@ -35,6 +39,49 @@ def login_request(request):
         
     contexto = {
     'form': AuthenticationForm(),
+    'accion_form': 'Login',
+    'titulo_form': 'Login User'
+    }
     #'name_submit':'Login'    
+
+    return render(request,'UserBlog/login.html',contexto)
+
+
+
+
+def register(request):
+    
+    if request.method == "POST":
+        
+        #form = UserCreationForm(request.POST) #capturamos la inf en el formulario 
+        form = UserRegisterForm(request.POST)
+        
+        if form.is_valid(): #validamos 
+            
+            form.save()
+            
+            messages.info(request, 'Tu usuario fue registrado satisfactoriamente!')
+        else:
+            messages.info(request, 'Tu usuario no pudo ser registrado!')
+        return redirect('AppBlogInicio')    
+
+    contexto = {
+        #'form': UserCreationForm(),
+        'form': UserRegisterForm(),
+        'accion_form': 'Registro',
+        'titulo_form': 'Registro Usuario'
     }
     return render(request,'UserBlog/login.html',contexto)
+
+
+
+
+#def editar_usuario(request):
+    
+
+
+
+
+
+
+

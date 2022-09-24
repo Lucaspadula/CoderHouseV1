@@ -10,8 +10,16 @@
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'AppBlogInicio' %}">Inicio</a></li>
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'About' %}">Acerca</a></li>
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'Samplepost' %}">Blog</a></li>
-                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'User' %}">Usuario</a></li>
+                
+                {%if user.is_authenticated %}
+                    <h5 a class="nav-link px-lg-3 py-3 py-lg-4"> User: <strong>{{user.get_username}}</strong> </h5>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'UserBlogLogout' %}">Logout</a></li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'UserBlogLogin' %}">Login</a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'UserBlogRegistro' %}">Registrarse</a></li>
+                {%endif%}
             </ul>
+                
         </div>
     </div>
 </nav>
