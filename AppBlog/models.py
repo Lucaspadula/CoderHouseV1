@@ -4,16 +4,6 @@ from email.mime import image
 from re import A
 from django.db import models
 
-class user(models.Model):
-    nombre = models.CharField(max_length=40)
-    apelllido = models.CharField(max_length=40)
-    username = models.CharField(max_length=40)
-    email = models.CharField(max_length=40)
-    password = models.CharField(max_length=40)
-    image = models.ImageField(upload_to='avatares', null=True, blank=True)
-    status =  models.IntegerField()
-    created_time  = models.DateField()
-
 
 
 class Commentario(models.Model):

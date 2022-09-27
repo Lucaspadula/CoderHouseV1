@@ -297,6 +297,12 @@ figure {
   margin: 0 0 1rem;
 }
 
+
+img.redimension {
+  max-width: 50%;
+  max-height:50%;
+}
+
 img,
 svg {
   vertical-align: middle;
