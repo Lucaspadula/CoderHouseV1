@@ -4,7 +4,7 @@ from AppBlog.views import *
 
 
 urlpatterns = [
-    path('', inicio, name='AppBlogInicio'),
+    path('', inicio.as_view(), name='AppBlogInicio'),
     path('About/', about, name='About'),
     path('Post/', samplepost, name='Samplepost'),
     path('User/', user, name='User')
