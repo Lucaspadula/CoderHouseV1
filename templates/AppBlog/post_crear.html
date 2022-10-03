@@ -1,0 +1,19 @@
+{% extends 'index.html' %}
+
+{% block title %}
+Creamos tu Blog
+{% endblock %}
+
+{% block inicio %}
+
+    <form action="AppBlog/Blog_fltrado" method="GET">
+    {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <input type="submit" value="Enviar">
+
+    </form>
+
+
+{% endblock %}

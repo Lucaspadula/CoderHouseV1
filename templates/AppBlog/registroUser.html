@@ -1,0 +1,70 @@
+
+
+
+{% extends 'index.html' %}
+
+{% load static %}
+
+{% block title %}
+    Perfil
+{% endblock %}
+<link href="{% static 'css/stylesLetras.css' %}" rel="stylesheet" type="text/css" />
+<!--link rel="stylesheet" type="text/css" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css"-->
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+
+    {% block inicio %}
+
+
+    <link href="{% static 'css/stylesLetras.css' %}" rel="stylesheet" type="text/css" />
+
+        <a href= "{% url 'AppBlogPerfil' user.username  %}"> </a>
+        <section class="perfil-usuario">
+            <div class="contenedor-perfil">
+
+                <div class="portada-perfil" style="background-image: url({% static 'assets/img/perfil.png'  %});">
+                    <div class="sombra"></div>
+                    <div class="avatar-perfil">
+                        <img src="{% static 'assets/img/perfil.png'  %}" alt="img">
+                       
+                        </a>
+                    </div>
+                    <div class="datos-perfil">
+                        <h4 class="titulo-usuario">{{user.username}} {{user.first_name}} {{user.last_name}} </h4>
+                        <p class="bio-usuario">{{perfils.descripcion}}</p>
+                        <ul class="lista-perfil">
+                            <li>{{posts.count}} Publicaciones</li>
+                        </ul>
+                    </div>
+                    <div class="opcciones-perfil">
+                        
+                    </div>
+                </div>
+                <div class="menu-perfil">
+                    <ul>
+                        <li><i class="icono-perfil fas fa-info-circle"></i> Informacion</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+                
+
+        </section>
+
+        <section >
+            <br>
+            <br>
+            <div class="portada-perfil">
+                <h1> Email: {{user.email}} </h1>
+                <h1> Es Superusuario:{{user.is_superuser}} </h1>
+                <h1> Tiempo de Conexion:{{user.last_login}} </h1>
+                <h1> Fecha de Registro:{{user.date_joined}} </h1>
+
+
+            </div>   
+
+        </section>
+
+
+    {% endblock %}
+
