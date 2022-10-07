@@ -19,3 +19,13 @@ class BlogForms(forms.ModelForm):
                     ]
 
 
+class EditForms(forms.ModelForm):
+    class Meta:
+        
+        model = post
+        fields = ['titulo',
+                    'breve',
+                    'contenido',
+                    'image',
+                    'created_at'
+                    ]

@@ -7,22 +7,23 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto py-4 py-lg-0">
-                <img src="{{user.avatar.imagen.url}}" style = 'max-width: 20%;
-                                    max-height:20%;'  alt="" >
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'AppBlogInicio' %}">Inicio</a></li>
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'About' %}">Acerca</a></li>
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'AppBlogPost' %}">Blog</a></li>
                 {%if user.is_authenticated %}
-                    
                     <!--h5 a class="nav-link px-lg-3 py-3 py-lg-4"> Usuario: <strong>{{user.get_username}}</strong> </h5-->
-                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'AppBlogPerfil' user.username %}">Usuario: <strong>{{user.get_username}}</strong></a></li>
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'AppBlogPerfil' user.username %}">Usuario: <strong>{{user.get_username}}</strong></a>
+                        <img src= "{{user.avatar.imagen.url}}"  width = '20%' >
+                        
+                    </li>
                     
                     {%if user.is_superuser %}
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'AppBlogCrearPost' %}">Crear Blog</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'UserEditar' %}">Editar Usuario</a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'UserBlogAvatar' %}">Editar Avatar</a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'UserBlogAvatar' %}">Crear Avatar</a></li>
                         <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'UserDelete' %}">Eliminar User</a></li>
                     {%endif%}
+                    <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'UserBlogAvatar' %}">Crear Avatar</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'UserBlogLogout' %}">Logout</a></li>
                 {% else %}
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'UserBlogLogin' %}">Login</a></li>

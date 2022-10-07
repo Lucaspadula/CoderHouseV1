@@ -1,6 +1,10 @@
 
 
+from email.mime import image
+from functools import cache
+import os
 from urllib import request
+import django
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.shortcuts import render, redirect
@@ -140,28 +144,29 @@ def editar_usuario(request):
 
 def upload_avatar(request):
     if request.method == "POST":
-        print("")
-        formulario = AvatarForm(request.POST, request.FILES)
-        
-        if formulario.is_valid():
-            data = formulario.cleaned_data
-            avatar = Avatar.objects.filter(user = data.get("user"))
+        user = request.user.id
+        print(f'User: {user}')
+        try:
+            avatar = Avatar.objects.filter( user_id = user).update(               
+            )
+            old_imag = Avatar.objects.get (user_id = user)
+            form = AvatarForm(request.POST, request.FILES, instance = old_imag)
+            print(f"avatar {avatar}")
             
-            if len(avatar)> 0:
+            if form.is_valid(): 
+                imagen_path = old_imag.imagen.path
                 
-                avatar = avatar[0]
-                avatar.imagen = formulario.cleaned_data["imagen"]
-                avatar.save()
+                if os.path.exists(imagen_path):
+                    os.remove(imagen_path)
+                    
+                form.save()    
                 
-                messages.info(request, 'Tu imagne fue editada satisfactoriamente!')
-            else:
-                avatar = Avatar(user=data.get("user"), imagen= data.get("imagen"))
-                avatar.save()
-                
-                messages.info(request, 'Tu imagen fue creada satisfactoriamente!')
-                
-        return redirect('AppBlogInicio')
-                
+                messages.info(request, 'Tu imagen fue editada satisfactoriamente!')
+                    
+                return redirect('AppBlogInicio')
+        except django.db.utils.IntegrityError:
+            messages.error(request, "El Formulario tiene un Error")
+                        
     
     contexto={
         "form":AvatarForm(),

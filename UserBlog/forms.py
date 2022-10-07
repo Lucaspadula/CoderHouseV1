@@ -8,7 +8,7 @@ from UserBlog.models import Avatar
 class UserRegisterForm(UserCreationForm):#no lo usamos como Form 
     email = forms.EmailField()
     last_name = forms.CharField(max_length=40)
-    is_superuser = forms.BooleanField()
+    is_superuser = forms.IntegerField(help_text="1: Super Usuario, 0: Usuario Normal")
     
 
     class Meta:
@@ -19,7 +19,10 @@ class UserRegisterForm(UserCreationForm):#no lo usamos como Form
 class AvatarForm(forms.ModelForm):
     class Meta:
         model = Avatar
-        fields = "__all__"
+        fields =  [
+                    'imagen',
+                    'imgPort'
+        ]
 
 class PerfilForm(forms.ModelForm):
     
@@ -27,7 +30,6 @@ class PerfilForm(forms.ModelForm):
         model = User
         fields= ('username',
                 'email', 
-                'last_name',
-                
+                'last_name'
         )
         

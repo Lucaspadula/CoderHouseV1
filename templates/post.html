@@ -15,9 +15,9 @@
     {% block inicio %}
         {% for post in entity %}
         
-        {%if post.count %}
-        <h2 class="subheading">No hay ningun post</h2>
-        {%endif%}
+            {%if post.id == none %}
+                <h2 class="subheading">No hay ningun post</h2>
+            {%endif%}
         <!-- Page Header-->
         {%if post.image %}
             <header class="masthead" style="background-image: url( {{post.image.url}})">
@@ -50,7 +50,7 @@
                             <p>{{ post.contenido }}</p>
 
                             {%if post.image %}
-                                <img src= "{{post.image.url}}">
+                                <img src= "{{post.image.url}}" width = '100%'>
                             {% else %}
                             <img style=" width: 70%;" src= "{% static 'assets/img/pro2.jpeg' %}">
                             {%endif%}
@@ -59,6 +59,8 @@
                                     <a href= "{% url 'AppBlogDeletePost' post.id  %}"> Eliminar Post </a>
                                     <br>
                                     <a href= "{% url 'AppBlogEditarPost' post.id  %}"> Editar Post </a>
+                                    <br>
+                                    <a href= "{% url 'AppBlogCrearPost'  %}"> Crear Post </a>
                                 {%endif%}
                             </div>
                             </p>
