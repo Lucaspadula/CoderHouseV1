@@ -22,11 +22,11 @@
         <section class="perfil-usuario">
             <div class="contenedor-perfil">
 
-                <div class="portada-perfil" style="background-image: url({% static 'assets/img/perfil.png'  %});">
+                <div class="portada-perfil" style="background-image: url({{user.avatar.imgPort.url}});">
                     <div class="sombra"></div>
                     <div class="avatar-perfil">
-                        <img src="{% static 'assets/img/perfil.png'  %}" alt="img">
-                       
+                        <!--img src="{% static 'assets/img/perfil.png'  %}" alt="img"-->
+                        <img src="{{user.avatar.imagen.url}}" height= '100%' alt="img">
                         </a>
                     </div>
                     <div class="datos-perfil">
@@ -42,7 +42,7 @@
                 </div>
                 <div class="menu-perfil">
                     <ul>
-                        <li><i class="icono-perfil fas fa-info-circle"></i> Informacion</a></li>
+                        <li><i class="icono-perfil fas fa-info-circle"></i><a> Informacion</a></li>
                     </ul>
                 </div>
             </div>
@@ -55,10 +55,13 @@
             <br>
             <br>
             <div class="portada-perfil">
-                <h1> Email: {{user.email}} </h1>
-                <h1> Es Superusuario:{{user.is_superuser}} </h1>
-                <h1> Tiempo de Conexion:{{user.last_login}} </h1>
-                <h1> Fecha de Registro:{{user.date_joined}} </h1>
+                <h3> Email: {{user.email}} </h3>
+                <br>
+                <h3> Es Superusuario:{{user.is_superuser}} </h3>
+                <br>
+                <h3> Tiempo de Conexion:{{user.last_login}} </h3>
+                <br>
+                <h3> Fecha de Registro:{{user.date_joined}} </h3>
 
 
             </div>   

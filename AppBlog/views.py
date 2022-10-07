@@ -6,7 +6,7 @@ from django.views.generic import  ListView,View
 import random
 import django
 from django.contrib import messages
-from AppBlog.forms import BlogForms
+from AppBlog.forms import BlogForms, EditForms
 from AppBlog.models import *
 from UserBlog.forms import PerfilForm
 from django.contrib.auth.models import User
@@ -34,12 +34,13 @@ def posts(request):
     posts = post.objects.all()
     print("Posts ", posts )
     page = request.GET.get('page', 1)
-    try:
-        paginator = Paginator(posts,1)
-        posts= paginator.page(page)
-    except:
-        if posts.count() == 0:
-            messages.info(request, 'No hay ningun posts!!')
+    
+    paginator = Paginator(posts,1)
+    pages= paginator.page(page)
+    
+    if posts.count() == 0:
+        print(f'Cuantos post tiene {posts.count}')
+        messages.info(request, 'No hay ningun posts!!')
     
     contexto = {
         'entity':posts,
@@ -53,7 +54,7 @@ def CrearPost(request):
     try:
         if request.method == "POST":
             form = BlogForms(request.POST, request.FILES)
-           
+        
             if form.is_valid():
                 data = form.cleaned_data 
                 posts = post(
@@ -112,7 +113,7 @@ def EditarPost(request, id):
     
     if request.method == 'POST':
         
-        forms = BlogForms(request.POST, request.FILES, instance=editarPost)
+        forms = EditForms(request.POST, request.FILES, instance=editarPost)
         try:
             if forms.is_valid():
                 data = forms.cleaned_data
@@ -120,7 +121,6 @@ def EditarPost(request, id):
                 editarPost.titulo = data.get('titulo')
                 editarPost.breve = data.get('breve')
                 editarPost.contenido = data.get('contenido')
-                editarPost.user = data.get('user')
                 editarPost.image = data.get('image')
                 editarPost.created_at = data.get('created_at')
                 
@@ -142,19 +142,18 @@ def EditarPost(request, id):
                     messages.error(request, "la modificacion fallo por que la Post esta repedita")
                 return redirect('AppBlogPost')
             else:
-                forms = BlogForms(instance=post)
+                forms = EditForms(instance=post)
                 messages.error(request, "El Formulario tiene un Error")
                 return render(request, 'base_formulario.html',{'forms': forms})
                 
         except django.db.utils.IntegrityError:
                     messages.error(request, "validacion de formulario")
     contexto = {
-        'form': BlogForms(
+        'form': EditForms(
             initial = {
                 "titulo":editarPost.titulo,
                 "breve":editarPost.breve,
                 "contenido":editarPost.contenido,
-                "user":editarPost.user,
                 "image":editarPost.image,
                 "created_at": editarPost.created_at  
             }
