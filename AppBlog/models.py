@@ -27,7 +27,7 @@ class post(ModelBase):
     slug = models.CharField('slug',max_length=150, unique=True, null=True)
     breve = models.CharField('breve',max_length=40)
     contenido = RichTextField(null=True)
-    user = models.OneToOneField(User, null = False, on_delete=models.CASCADE)
+    user = models.ForeignKey (User, null = False, on_delete=models.CASCADE)
     image= models.ImageField(upload_to='avatares', null=True, blank=True)
     created_at = models.DateField(null=True)   
     

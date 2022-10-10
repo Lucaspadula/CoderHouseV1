@@ -35,12 +35,17 @@ def posts(request):
     print("Posts ", posts )
     page = request.GET.get('page', 1)
     
-    paginator = Paginator(posts,1)
-    pages= paginator.page(page)
+    try:
+        paginator = Paginator(posts,1)
+        posts = paginator.page(page)
+        
+        if len(posts) == 0:
+            messages.info(request, 'No hay ningun posts!!')
+    except:
+            messages.info(request, 'No se encontro ningun posts!!')
+        
     
-    if posts.count() == 0:
-        print(f'Cuantos post tiene {posts.count}')
-        messages.info(request, 'No hay ningun posts!!')
+    
     
     contexto = {
         'entity':posts,
