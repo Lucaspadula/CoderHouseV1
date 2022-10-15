@@ -1,0 +1,3 @@
+#Archivos que no quiero se suban al repo. 
+avatares
+db.sqlite3
