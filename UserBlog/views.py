@@ -3,6 +3,7 @@
 from email.mime import image
 from functools import cache
 import os
+from telnetlib import LOGOUT
 from urllib import request
 import django
 from django.contrib.auth import authenticate, login
@@ -83,19 +84,21 @@ def register(request):
     return render(request,'base_formulario.html',contexto)
 
 def eliminar_user(request):
-    usuario = request.user
+    usuario = request.user.id
+    print(f'Usuario{usuario}')
     try:
-        delete_user = User.objects.get(usuario)
+        delete_user = User.objects.get(id = usuario)
     except User.DoesNotExist:
         messages.info(request, 'El Usuario que quieres eliminar no existe!')    
         return redirect("AppBlogInicio")
     
     if  request.user.is_superuser == True: 
+        
         delete_user.delete()
         messages.info(request, f'El Usuario : {delete_user} fue eliminado!')
         return redirect("AppBlogPost")
     else:
-        messages.info(request, f'La publicacion no puede ser Borrada porque no es un Super Usuario')
+        messages.info(request, f' No puede ser eliminado el usuario porque no es un Super Usuario')
         return redirect("AppBlogInicio")
 
 
@@ -149,21 +152,43 @@ def upload_avatar(request):
         try:
             avatar = Avatar.objects.filter( user_id = user).update(               
             )
-            old_imag = Avatar.objects.get (user_id = user)
-            form = AvatarForm(request.POST, request.FILES, instance = old_imag)
-            print(f"avatar {avatar}")
+            avatar1 = Avatar.objects.filter( user_id = user)
             
-            if form.is_valid(): 
-                imagen_path = old_imag.imagen.path
+            print(f'avatar  {len(avatar1)} == 0' )
+            if len(avatar1) == 0:
                 
-                if os.path.exists(imagen_path):
-                    os.remove(imagen_path)
+                form = AvatarForm(request.POST, request.FILES)
+                if form.is_valid(): 
                     
-                form.save()    
+                    print('primer if')
+                    data = form.cleaned_data
+                    avatar = Avatar(
+                        user = data.get('user'),
+                        imagen = data.get('imagen'),
+                        imgPort = data.get('imgPort')
+                        
+                    )
+                    
+                    avatar.save()
+                    messages.info(request, 'Tu imagen fue creada satisfactoriamente!')
                 
-                messages.info(request, 'Tu imagen fue editada satisfactoriamente!')
+            else:
+                print(f'avatar  {len(avatar1)} != 0' )
+                old_imag = Avatar.objects.get (user_id = user)
+                form = AvatarForm(request.POST, request.FILES, instance = old_imag)
+                print(f"avatar {avatar}")
+                
+                if form.is_valid(): 
+                    imagen_path = old_imag.imagen.path
                     
-                return redirect('AppBlogInicio')
+                    if os.path.exists(imagen_path):
+                        os.remove(imagen_path)
+                        
+                    form.save()    
+                    
+                    messages.info(request, 'Tu imagen fue editada satisfactoriamente!')
+                        
+                    return redirect('AppBlogInicio')
         except django.db.utils.IntegrityError:
             messages.error(request, "El Formulario tiene un Error")
                         

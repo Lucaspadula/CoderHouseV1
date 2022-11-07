@@ -20,8 +20,10 @@ class AvatarForm(forms.ModelForm):
     class Meta:
         model = Avatar
         fields =  [
+                    'user',
                     'imagen',
                     'imgPort'
+                    
         ]
 
 class PerfilForm(forms.ModelForm):
